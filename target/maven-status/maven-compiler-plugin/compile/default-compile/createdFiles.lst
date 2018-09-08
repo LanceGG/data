@@ -1,0 +1,9 @@
+com\elasticsearch\data\utils\WordStroke.class
+com\elasticsearch\data\entity\Movie.class
+com\elasticsearch\data\MainApplication.class
+com\elasticsearch\data\web\DataController.class
+com\elasticsearch\data\utils\WordStroke$Singleton.class
+com\elasticsearch\data\service\impl\DataAccessServiceImpl.class
+com\elasticsearch\data\service\MovieElasticsearchRepository.class
+com\elasticsearch\data\dao\DataDao.class
+com\elasticsearch\data\service\DataAccessService.class

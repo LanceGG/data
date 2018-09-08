@@ -1,0 +1,140 @@
+sverver:
+  port: 10032
+
+spring:
+  profiles:
+    active: local
+
+---
+spring:
+  profiles: dev
+  # druid 连接池配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    druid:
+      url: jdbc:mysql://120.78.143.194:4306/flnet_cms_media?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+      username: root
+      password: Flnet2018
+      initial-size: 5
+      min-idle: 1
+      max-active: 10
+      # 使用druid数据源
+      # 配置获取连接等待超时的时间，单位是毫秒，默认-1
+      max-wait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒，默认一分钟
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒，默认30分钟
+      min-evictable-idle-time-millis: 1800000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒，默认7小时
+      max-evictable-idle-time-millis: 25200000
+      # 检测连接SQL
+      validation-query: SELECT 1
+      # 申请连接时执行validationQuery检测连接是否有效,做了这个配置会降低性能
+      test-on-borrow: false
+      # 归还连接时执行validationQuery检测连接是否有效,做了这个配置会降低性能
+      test-on-return: false
+      # 申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
+      test-while-idle: true
+      # PSCache对支持游标的数据库性能提升巨大。maxOpenPreparedStatements > 0时，poolPreparedStatements自动开启
+      pool-prepared-statements: true
+      # 与maxPoolPreparedStatementPerConnectionSize参数相同
+      max-open-prepared-statements: 10
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,slf4j
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=2000
+      # 合并多个DruidDataSource的监控数据
+      use-global-data-source-stat: true
+  data:
+    elasticsearch:
+      # 集群名
+      cluster-name: elasticsearch
+      # 连接节点,注意在集群中通信都是9300端口，否则会报错无法连接上！
+      cluster-nodes: 119.23.237.208:9300,47.106.133.130:9300,47.106.132.177:9300
+      # 是否本地连接
+      local: false
+      repositories:
+        # 仓库中数据存储
+        enabled: true
+
+---
+spring:
+  profiles: local
+  # druid 连接池配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    druid:
+      url: jdbc:mysql://localhost:3306?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+      username: root
+      password: 123456
+      initial-size: 5
+      min-idle: 1
+      max-active: 10
+      # 使用druid数据源
+      # 配置获取连接等待超时的时间，单位是毫秒，默认-1
+      max-wait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒，默认一分钟
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒，默认30分钟
+      min-evictable-idle-time-millis: 1800000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒，默认7小时
+      max-evictable-idle-time-millis: 25200000
+      # 检测连接SQL
+      validation-query: SELECT 1
+      # 申请连接时执行validationQuery检测连接是否有效,做了这个配置会降低性能
+      test-on-borrow: false
+      # 归还连接时执行validationQuery检测连接是否有效,做了这个配置会降低性能
+      test-on-return: false
+      # 申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
+      test-while-idle: true
+      # PSCache对支持游标的数据库性能提升巨大。maxOpenPreparedStatements > 0时，poolPreparedStatements自动开启
+      pool-prepared-statements: true
+      # 与maxPoolPreparedStatementPerConnectionSize参数相同
+      max-open-prepared-statements: 10
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,slf4j
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=2000
+      # 合并多个DruidDataSource的监控数据
+      use-global-data-source-stat: true
+  data:
+    elasticsearch:
+      # 集群名
+      cluster-name: crm
+      # 连接节点,注意在集群中通信都是9300端口，否则会报错无法连接上！
+#      cluster-nodes: 119.23.237.208:9300,47.106.133.130:9300,47.106.132.177:9300
+      # 是否本地连接
+      local: false
+      repositories:
+        # 仓库中数据存储
+        enabled: true
+      cluster-nodes: 127.0.0.1:9300
+
+# mybatis 配置
+mybatis:
+  mapper-locations: classpath:com/elasticsearch/data/dao/mapper/*.xml
+  configuration:
+    # 使全局的映射器启用或禁用二级缓存。默认true
+    cache-enabled: true
+    # 全局启用或禁用延迟加载。当禁用时，所有关联对象都会即时加载。默认false
+    lazy-loading-enabled: true
+    # 当启用时，有延迟加载属性的对象在被调用时将会完全加载任意属性。否则，每种属性将会按需要加载。默认false
+    aggressive-lazy-loading: false
+    # 是否允许单条sql返回多个数据集(取决于驱动的兼容性)。默认true
+    multiple-result-sets-enabled: true
+    # 是否可以使用列的别名 (取决于驱动的兼容性)。默认true
+    use-column-label: true
+    # 允许JDBC生成主键。需要驱动器支持。如果设为了true，这个设置将强制使用被生成的主键，有一些驱动器不兼容不过仍然可以执行。默认false
+    use-generated-keys: false
+    # 指定MyBatis如何自动映射数据基表的列(NONE：不映射；PARTIAL:部分；FULL:全部)。默认PARTIAL
+    auto-mapping-behavior: partial
+    # 默认的执行类型(SIMPLE: 简单；REUSE: 执行器可能重复使用prepared statements语句；BATCH: 执行器可以重复执行语句和批量更新）。默认SIMPLE
+    default-executor-type: simple
+    # 使用驼峰命名法转换字段。默认false
+    map-underscore-to-camel-case: true
+    # 设置本地缓存范围(session: 就会有数据的共享；statement:语句范围(这样就不会有数据的共享))。默认session
+    local-cache-scope: session
+    # 设置JDBC类型为空时,某些驱动程序要指定值,default:OTHER，插入空值时不需要指定类型
+    jdbc-type-for-null: null
